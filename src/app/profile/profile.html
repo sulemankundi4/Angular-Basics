@@ -1,0 +1,63 @@
+<h1>Angular Control Flow Examples</h1>
+
+<!-- 1. @if / @else Example -->
+<section>
+  <h2>1. if / else Statement</h2>
+
+  @if (isLoggedIn) {
+  <p>Welcome back, {{ username }}!</p>
+  <button (click)="toggleLogin()">Logout</button>
+  } @else {
+  <p>Please log in to continue.</p>
+  <button (click)="toggleLogin()">Login</button>
+  }
+</section>
+
+<hr />
+
+<!-- 2. @for Loop Example -->
+<section>
+  <h2>2. for Loop</h2>
+
+  <ul>
+    @for (user of users; track user.id) {
+    <li>{{ user.name }} - Age: {{ user.age }}</li>
+    } @empty {
+    <li>No users found</li>
+    }
+  </ul>
+</section>
+
+<hr />
+
+<!-- 3. @switch / @case / @default Example -->
+<section>
+  <h2>3. switch Statement</h2>
+
+  @switch (userRole) { @case ('admin') {
+  <p>🔑 Admin Access: You have full permissions</p>
+  } @case ('user') {
+  <p>👤 User Access: You have standard permissions</p>
+  } @case ('guest') {
+  <p>👁️ Guest Access: You have limited permissions</p>
+  } @default {
+  <p>⚠️ Unknown role</p>
+  } }
+
+  <p>
+    Current Role: <strong>{{ userRole }}</strong>
+  </p>
+</section>
+
+<hr />
+
+<!-- 4. Nested @if Example -->
+<section>
+  <h2>4. Nested if</h2>
+
+  @if (isLoggedIn) { @if (userRole === 'adsmin') {
+  <p>✅ Admin panel available</p>
+  } @else {
+  <p>❌ Admin panel not available</p>
+  } }
+</section>

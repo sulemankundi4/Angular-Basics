@@ -1,14 +1,144 @@
 <div class="app-root">
-  <div class="counter-card">
-    <h1 class="title">Counter</h1>
+  <!-- ============================================ -->
+  <!-- Counter Example (COMMENTED OUT) -->
+  <!-- ============================================ -->
+  <!-- <div class="counter-card">
+    <h1 class="title">{{ computedFullName() }}</h1>
 
-    <div class="value" [class.negative]="counter < 0">
-      {{ counter }}
+    <app-profile></app-profile>
+
+    <div class="value" [class.negative]="counter() < 0">
+      {{ counter() }}
     </div>
 
     <div class="actions">
       <button class="btn secondary" (click)="decrementCount()">- Decrement</button>
       <button class="btn primary" (click)="incrementCount()">+ Increment</button>
     </div>
+  </div> -->
+
+  <!-- <div class="counter-card">
+    <h1 class="title">Live Input Demo</h1>
+
+    <div class="actions" style="flex-direction: column; align-items: stretch; gap: 0.75rem">
+      <label>
+        First value:
+        <input type="text" #firstInput />
+      </label>
+
+      <label>
+        Second value:
+        <input type="text" #secondInput />
+      </label>
+    </div>
+
+    <button
+      (click)="handleSubmit(firstInput.value, secondInput.value)"
+      style="background-color: red; padding: 10px"
+    >
+      Submit
+    </button>
+
+    <div class="value" style="margin-top: 1rem; font-size: 1.1rem">
+      <p>First value: {{ firstInput.value }}</p>
+      <p>Second value: {{ secondInput.value }}</p>
+    </div>
+  </div> -->
+
+  <!-- ============================================ -->
+  <!-- Todo List with Two-Way Binding -->
+  <!-- ============================================ -->
+  <div class="counter-card todo-container">
+    <h1 class="title">✅ Todo List with ngModel</h1>
+    <p class="subtitle">Manage your tasks with two-way binding!</p>
+
+    <!-- Add Todo Form -->
+    <div class="add-todo-form">
+      <input
+        type="text"
+        [(ngModel)]="newTodoText"
+        (keyup.enter)="addTodo()"
+        placeholder="What needs to be done?"
+        class="todo-input"
+      />
+
+      <select [(ngModel)]="selectedPriority" class="priority-select">
+        <option value="low">Low Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+
+      <button class="btn primary add-btn" (click)="addTodo()" [disabled]="!newTodoText.trim()">
+        ➕ Add Task
+      </button>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-value">{{ totalTodos }}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value active">{{ activeTodos }}</div>
+        <div class="stat-label">Active</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value completed">{{ completedTodos }}</div>
+        <div class="stat-label">Completed</div>
+      </div>
+    </div>
+
+    <!-- Filter Options -->
+    <div class="filter-container">
+      <label class="filter-option">
+        <input type="radio" name="filter" value="all" [(ngModel)]="filterOption" />
+        <span>All</span>
+      </label>
+      <label class="filter-option">
+        <input type="radio" name="filter" value="active" [(ngModel)]="filterOption" />
+        <span>Active</span>
+      </label>
+      <label class="filter-option">
+        <input type="radio" name="filter" value="completed" [(ngModel)]="filterOption" />
+        <span>Completed</span>
+      </label>
+    </div>
+
+    <!-- Todo List -->
+    <div class="todo-list">
+      @if (filteredTodos.length === 0) {
+      <div class="empty-state">
+        <p>🎉 No tasks {{ filterOption === 'all' ? 'yet' : 'in this category' }}!</p>
+      </div>
+      } @else { @for (todo of filteredTodos; track todo.id) {
+      <div class="todo-item" [class.completed]="todo.completed">
+        <div class="todo-content">
+          <input
+            type="checkbox"
+            [(ngModel)]="todo.completed"
+            (change)="toggleTodo(todo)"
+            class="todo-checkbox"
+          />
+          <div class="todo-text-container">
+            <span class="todo-text">{{ todo.text }}</span>
+            <span class="priority-badge" [style.background-color]="getPriorityColor(todo.priority)">
+              {{ todo.priority }}
+            </span>
+          </div>
+        </div>
+        <button class="delete-btn" (click)="deleteTodo(todo.id)" title="Delete task">🗑️</button>
+      </div>
+      } }
+    </div>
+
+    <!-- Actions -->
+    @if (completedTodos > 0) {
+    <div class="actions" style="margin-top: 1.5rem">
+      <button class="btn secondary" (click)="clearCompleted()">
+        🧹 Clear Completed ({{ completedTodos }})
+      </button>
+    </div>
+    }
   </div>
 </div>
